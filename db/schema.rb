@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830171032) do
+ActiveRecord::Schema.define(version: 20170830180850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 20170830171032) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.index ["medical_record_id"], name: "index_prescriptions_on_medical_record_id", using: :btree
+  end
+
+  create_table "resource_mappings", force: :cascade do |t|
+    t.integer  "medical_record_ids",              array: true
+    t.integer  "accessing_user_id"
+    t.integer  "resource_owner_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["accessing_user_id"], name: "index_resource_mappings_on_accessing_user_id", using: :btree
+    t.index ["resource_owner_id"], name: "index_resource_mappings_on_resource_owner_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|

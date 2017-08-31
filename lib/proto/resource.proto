@@ -1,26 +1,37 @@
-syntax="proto3"
+syntax="proto3";
 
-package stamp.resource
+package stamp;
 
 service Api{
   rpc Access(AccessRequest) returns(AccessResponse) {}
-  rpc AccessConfirmation(AccessConfirmation) returns (AccessConfirmationResponse) {}
+  rpc AccessConfirmation(AccessConfirmationRequest) returns (AccessConfirmationResponse) {}
   //rpc Revoke(RevokeRequest) returns(RevokeResponse) {}
 }
 
 message AccessRequest {
-
+  int64 accessing_user = 1;
+  int64 resource_owner = 2;
+  repeated int64 medical_record = 3;
 }
 
 message AccessResponse {
-
+  Status status = 1;
+  string message = 2;
 }
 
-message AccessConfirmation {
-  int64 resource_mapping_id = 1;
-  string status = 2;
+message AccessConfirmationRequest {
+  int64 accessing_user = 1;
+  int64 resource_owner = 2;
+  repeated int64 medical_record = 3;
+  Status status = 4;
 }
 
 message AccessConfirmationResponse {
+  string message = 1;
+}
 
+enum Status {
+  GRANTED = 0;
+  AWAITING_RESPONSE = 1;
+  ACCESS_DENIED = 2;
 }

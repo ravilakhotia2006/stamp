@@ -4,6 +4,7 @@ class CreateResourceMappings < ActiveRecord::Migration[5.0]
 			t.integer :medical_record_ids, array: true
 			t.integer :accessing_user_id, index: true
 			t.integer :resource_owner_id, index: true
+      t.integer :status
 
       t.timestamps
     end

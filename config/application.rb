@@ -13,5 +13,6 @@ module Stamp
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths << "#{Rails.root}/lib/**/"
+    config.autoload_paths << "#{Rails.root}/app/error/**/"
   end
 end

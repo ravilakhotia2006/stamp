@@ -20,4 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  resources:
+    access_already_granted: 'Already have access to medical records.'
+    request_sent_to_user: 'Request have been sent to user for granting access.'
+  error:
+    status_not_found:
+      message: 'Status not found.'

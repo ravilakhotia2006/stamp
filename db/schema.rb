@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170830180850) do
     t.integer  "medical_record_ids",              array: true
     t.integer  "accessing_user_id"
     t.integer  "resource_owner_id"
+    t.integer  "status"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["accessing_user_id"], name: "index_resource_mappings_on_accessing_user_id", using: :btree

@@ -1,0 +1,26 @@
+syntax="proto3"
+
+package stamp.resource
+
+service Api{
+  rpc Access(AccessRequest) returns(AccessResponse) {}
+  rpc AccessConfirmation(AccessConfirmation) returns (AccessConfirmationResponse) {}
+  //rpc Revoke(RevokeRequest) returns(RevokeResponse) {}
+}
+
+message AccessRequest {
+
+}
+
+message AccessResponse {
+
+}
+
+message AccessConfirmation {
+  int64 resource_mapping_id = 1;
+  string status = 2;
+}
+
+message AccessConfirmationResponse {
+
+}

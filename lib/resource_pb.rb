@@ -20,7 +20,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :status, :enum, 4, "stamp.Status"
   end
   add_message "stamp.AccessConfirmationResponse" do
-    optional :message, :string, 1
+    optional :status, :int32, 1
+    optional :message, :string, 2
   end
   add_enum "stamp.Status" do
     value :GRANTED, 0

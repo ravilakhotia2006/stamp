@@ -5,18 +5,18 @@ require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "stamp.AccessRequest" do
-    optional :accessing_user, :int64, 1
-    optional :resource_owner, :int64, 2
-    repeated :medical_record, :int64, 3
+    optional :accessing_user_id, :int64, 1
+    optional :resource_owner_id, :int64, 2
+    repeated :medical_records, :int64, 3
   end
   add_message "stamp.AccessResponse" do
     optional :status, :enum, 1, "stamp.Status"
     optional :message, :string, 2
   end
   add_message "stamp.AccessConfirmationRequest" do
-    optional :accessing_user, :int64, 1
-    optional :resource_owner, :int64, 2
-    repeated :medical_record, :int64, 3
+    optional :accessing_user_id, :int64, 1
+    optional :resource_owner_id, :int64, 2
+    repeated :medical_records, :int64, 3
     optional :status, :enum, 4, "stamp.Status"
   end
   add_message "stamp.AccessConfirmationResponse" do

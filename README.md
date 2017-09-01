@@ -19,7 +19,10 @@ rvm install 2.3.2
 rvm gemset create stamp
 rvm use 2.3.2@stamp
 
-bundle install
+git clone git@github.com:ravilakhotia2006/stamp.git
+
+cd stamp && bundle install
+
 ```
 ### Interface
 We are using protocol buffer message format to create [grpc](https://grpc.io/docs/tutorials/basic/ruby.html) service interface.

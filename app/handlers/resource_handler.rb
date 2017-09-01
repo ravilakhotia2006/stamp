@@ -11,7 +11,6 @@ class ResourceHandler < Stamp::Api::Service
     owner_id = request.resource_owner_id
     mrids = request.medical_records.to_a
 
-    byebug
     record_ids = ResourceMapping.where(
       accessing_user_id: user_id,
       resource_owner_id: owner_id,

@@ -9,23 +9,24 @@ class ResourceHandler < Stamp::Api::Service
   def access(request, _unused_call)
     user_id = request.accessing_user_id
     owner_id = request.resource_owner_id
-    mrids = request.medical_record_ids
-    status = request.status
+    mrids = request.medical_records.to_a
 
+    byebug
     record_ids = ResourceMapping.where(
       accessing_user_id: user_id,
-      resource_owner_id:, owner_id,
+      resource_owner_id: owner_id,
       status: to_enum(:GRANTED)).pluck(:medical_record_ids)
 
     if record_ids.include?(mrids)
       access_response(:GRANTED, I18n.t('resources.access_already_granted'))
     else
       Event.notify(owner_id, user_id, mrids)
+      create_mapping(user_id, owner_id, mrids, :AWAITING_RESPONSE)
       access_response(:AWAITING_RESPONSE, I18n.t('resources.request_sent_to_user'))
     end
   rescue => ex
     # access_response()
-    Log.log.error "#{ex.message} - #{ex.backtrace}"
+    puts "#{ex.message} - #{ex.backtrace}"
   end
 
   def access_confirmation(request, _unused_call)
@@ -39,7 +40,7 @@ class ResourceHandler < Stamp::Api::Service
         'access granted')
     elsif status.eql?(:ACCESS_DENIED)
       Event.notify(request.accessing_user_id,
-        'access denied.'
+        'access denied.')
     end
 
     update_mapping(user_id, owner_id, record_ids, status)
@@ -54,10 +55,19 @@ class ResourceHandler < Stamp::Api::Service
   def update_mapping(user_id, owner_id, record_ids, status)
     ResourceMapping.where(
       accessing_user_id: user_id,
-      resource_owner_id:, owner_id,
-      medical_record_ids: record_ids,
+      resource_owner_id: owner_id,
+      medical_record_ids: record_ids.to_a,
       status: to_enum(:AWAITING_RESPONSE))
     .first
-    .update_attributes(status: status)
+    .update_attributes(status: to_enum(status))
+  end
+
+  def create_mapping(user_id, owner_id, records_ids, status)
+    ResourceMapping.create(
+      accessing_user_id: user_id,
+      resource_owner_id: owner_id,
+      medical_record_ids: records_ids,
+      status: to_enum(status)
+    )
   end
 end

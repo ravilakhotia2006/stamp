@@ -23,6 +23,9 @@ class ResourceHandler < Stamp::Api::Service
       Event.notify(owner_id, user_id, mrids)
       access_response(:AWAITING_RESPONSE, I18n.t('resources.request_sent_to_user'))
     end
+  rescue => ex
+    # access_response()
+    Log.log.error "#{ex.message} - #{ex.backtrace}"
   end
 
   def access_confirmation(request, _unused_call)

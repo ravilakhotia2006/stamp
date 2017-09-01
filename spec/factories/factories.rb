@@ -3,8 +3,12 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     name { Faker::Lorem.word }
 
-    after(:create) do |user|
-      FactoryGirl.create(:medical_record, user: user)
+    transient do
+      create_medical_records false
+    end
+
+    after(:create) do |user, evaluator|
+      FactoryGirl.create(:medical_record, user: user) if evaluator.create_medical_records
     end
   end
 

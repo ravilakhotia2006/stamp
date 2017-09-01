@@ -10,6 +10,7 @@ a grpc service instead of an api-only rails app.
 - [Development](#development)
   - [Environment](#environment)
   - [Compile proto to generate ruby classes](#compile-proto-to-generate-ruby-classes)
+- [Dockerization](#dockerization)
 
 ### Setup
 
@@ -73,3 +74,5 @@ This will start the server at 0.0.0.0:50052 and will be ready to accept request
   grpc_tools_ruby_protoc -I lib/proto --ruby_out=lib/ --grpc_out=lib/ lib/proto/resource.proto
 ```
 
+### Dockerization
+will be updating...

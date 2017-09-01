@@ -6,7 +6,7 @@ a grpc service instead of an api-only rails app.
 - [Setup](#setup)
 - [Design Brief](#design-brief)
 - [Interface](#interface)
-  - [Resource](https://github.com/NestAway/raseed-interface/wiki/Tax)
+  - [Resource](#resource)
 - [Development](#development)
   - [Environment](#environment)
   - [Compile proto to generate ruby classes](#compile-proto-to-generate-ruby-classes)
@@ -28,6 +28,7 @@ cd stamp && bundle install
 We are using protocol buffer message format to create [grpc](https://grpc.io/docs/tutorials/basic/ruby.html) service interface.
 [Protocol buffers](https://developers.google.com/protocol-buffers/) have strict type bindings and are backward compatible.
 
+#### Resource
 Request and response of respective rpc methods can be seen in [proto file](https://github.com/ravilakhotia2006/stamp/blob/master/lib/proto/resource.proto)
 
 ### Design Brief
@@ -48,3 +49,27 @@ Flow for user requesting access for records:
 7. response delegated to service
 8. response is saved and acknowledgment to user(resource_owner) is sent
 9. async event from service is triggered for intimation to user(accessing_user) regarding user response.
+
+
+### Development
+
+#### Environment
+
+apart from setup, you only need to set DATABASE_URL for the the service to work.
+```ruby
+  export DATABASE_URL=postgres://user:password@host:port/database_name
+```
+
+##### starting the server
+```ruby
+  bundle exec ruby lib/grpc_server.rb
+```
+
+This will start the server at 0.0.0.0:50052 and will be ready to accept request
+
+#### Compile proto to generate ruby classes
+
+```ruby
+  grpc_tools_ruby_protoc -I lib/proto --ruby_out=lib/ --grpc_out=lib/ lib/proto/resource.proto
+```
+

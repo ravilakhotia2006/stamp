@@ -9,6 +9,8 @@ FactoryGirl.define do
   end
 
   factory :medical_record do
+    note { Faker::Lorem.sentence }
+
     after(:create) do |medical_record|
       FactoryGirl.create(:prescription, medical_record: medical_record)
     end

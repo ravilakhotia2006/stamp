@@ -31,7 +31,7 @@ class ResourceHandler < Stamp::Api::Service
   def access_confirmation(request, _unused_call)
     user_id = request.accessing_user_id
     owner_id = request.resource_owner_id
-    record_ids = request.medical_record_ids
+    record_ids = request.medical_records
     status = request.status
 
     if status.eql?(:GRANTED)
@@ -45,7 +45,7 @@ class ResourceHandler < Stamp::Api::Service
     update_mapping(user_id, owner_id, record_ids, status)
     access_confirmation_response(200)
   rescue => ex
-    Log.log.error "#{ex.message} #{ex.backtrace}"
+    puts "#{ex.message} #{ex.backtrace}"
     access_confirmation_response(500, ex.message)
   end
 

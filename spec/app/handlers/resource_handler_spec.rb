@@ -33,7 +33,27 @@ RSpec.describe ResourceHandler do
   end
 
   describe '.access_confirmation' do
-    it 'grants the access to records' do; end
+    it 'grants the access to records' do
+      patient = FactoryGirl.create(:user, create_medical_records: true)
+      doctor = FactoryGirl.create(:user)
+
+      access_request = Stamp::AccessRequest.new(
+        accessing_user_id: doctor.id,
+        resource_owner_id: patient.id,
+        medical_records: patient.medical_records.pluck(:id))
+      access_response = handler.access(access_request, '')
+
+      access_confirmation_request = Stamp::AccessConfirmationRequest.new(
+        accessing_user_id: doctor.id,
+        resource_owner_id: patient.id,
+        medical_records: patient.medical_records.pluck(:id),
+        status: 0)
+
+      response = handler.access_confirmation(access_confirmation_request, '')
+
+      expect(response).to be_an_instance_of(Stamp::AccessConfirmationResponse)
+    end
+
     it 'does not grant access to records' do; end
     it 'raises exception when request does not have valid data' do; end
   end

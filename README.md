@@ -1,7 +1,7 @@
 # Stamp
 
 It is an authorization service used by users to request access(read permissions) on resources owned by other users. It is 
-a grpc service instead of an api-only rails app.
+a grpc based rails app.
 
 - [Setup](#setup)
 - [Design Brief](#design-brief)
